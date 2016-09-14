@@ -1,0 +1,10 @@
+# 测试
+cron:
+    expression:
+      firstTask: 0/5 * * * * ?
+
+# 测试
+my:
+   servers:
+       - dev.bar.com
+       - foo.bar.com
