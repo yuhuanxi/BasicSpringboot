@@ -1,6 +1,6 @@
 server:
     port: 8080
-    context-path:
+
 
 # 配置log
 logging:

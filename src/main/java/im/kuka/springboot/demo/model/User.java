@@ -1,23 +1,44 @@
 package im.kuka.springboot.demo.model;
 
-import lombok.Data;
+import java.util.Date;
 
 /**
- * @author: shipeng.yu
- * @time: 2016年09月14日 下午1:15
- * @version: 1.0
- * @since: 1.0
- * @description:
+ * 
+ * @author Cliff
  */
-@Data
-public class User {
+public class User  {
 
-    private String name;
+	private String username;
+	private Date time;
 
-    private String address;
-
-    public User(String name, String address) {
-        this.name = name;
-        this.address = address;
+	public User() {
+        super();
+        // TODO Auto-generated constructor stub
     }
+
+    public User(String username) {
+		this.username = username;
+		time = new Date();
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+//    @Override
+//    public String getName() {
+//        return getUsername();
+//    }
 }
