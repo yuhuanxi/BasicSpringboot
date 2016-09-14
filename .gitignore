@@ -7,3 +7,4 @@
 .idea/modules.xml
 .idea/qaplug_profiles.xml
 .idea/workspace.xml
+target/generated-sources/
