@@ -1,0 +1,57 @@
+server:
+    port: 8080
+    context-path:
+
+# 配置log
+logging:
+    config: classpath:log4j2.yml
+
+# 测试数据(测试从application.yml中获取数据)
+environments:
+    dev:
+        url: http://dev.bar.com
+        name: Developer Setup
+    prod:
+        url: http://foo.bar.com
+        name: My Cool App
+my:
+   servers:
+       - dev.bar.com
+       - foo.bar.com
+cron:
+  pattern: 0/6 * * * * ?
+  enable: disable
+
+# spring配置
+spring:
+    mvc:
+        view:
+            prefix: /templates/
+            suffix: .ftl
+    freemarker:
+        cache: false
+        request-context-attribute: request
+    #配置jpa,自动映射类到表
+    jpa:
+        database: MYSQL
+        show-sql: true
+        hibernate:
+            ddlAuto: update
+            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL5Dialect
+    output:
+        ansi: enabled
+
+    mail:
+        host: smtp.qq.com
+        username: 335747019@qq.com
+        password: adobe1874
+        properties:
+          mail:
+            smtp:
+              auth: true
+              starttls:
+                enable: true
+                required: true
