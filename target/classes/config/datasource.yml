@@ -3,8 +3,8 @@ spring:
     datasource:
         # 开发环境
         dev:
-            name: test
-            url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&characterEncoding=UTF8&useUnicode=true
+            name: dev
+            url: jdbc:mysql://127.0.0.1:3306/dev?useSSL=false&characterEncoding=UTF8&useUnicode=true
             username: root
             password: root
             # 使用druid数据源
@@ -26,8 +26,8 @@ spring:
 
         # 生产环境
         prod:
-            name: test
-            url: jdbc:mysql://127.0.0.1:3306/test1?useSSL=false&characterEncoding=UTF8&useUnicode=true
+            name: prod
+            url: jdbc:mysql://127.0.0.1:3306/prod?useSSL=false&characterEncoding=UTF8&useUnicode=true
             username: root
             password: root
             # 使用druid数据源

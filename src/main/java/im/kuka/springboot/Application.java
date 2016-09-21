@@ -3,8 +3,6 @@ package im.kuka.springboot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -19,7 +17,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SpringBootApplication
 @EnableScheduling
 // 去掉 dataSource 自动注入,此时如果没有dataSource bean 的话,启用该自动注解会报错
-@EnableAutoConfiguration(exclude = {HibernateJpaAutoConfiguration.class, DataSourceAutoConfiguration.class})
+//@EnableAutoConfiguration(exclude = {HibernateJpaAutoConfiguration.class, DataSourceAutoConfiguration.class})
+@EnableAutoConfiguration
 public class Application extends WebMvcConfigurerAdapter {
 
     public static void main(String[] args) {

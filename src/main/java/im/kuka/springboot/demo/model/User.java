@@ -12,7 +12,6 @@ public class User {
 
     public User() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public User(String username) {
@@ -36,8 +35,4 @@ public class User {
         this.time = time;
     }
 
-//    @Override
-//    public String getName() {
-//        return getUsername();
-//    }
 }

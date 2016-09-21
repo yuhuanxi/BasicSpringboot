@@ -1,4 +1,4 @@
-package im.kuka.springboot.demo.config;
+package im.kuka.springboot.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
