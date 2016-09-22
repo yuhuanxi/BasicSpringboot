@@ -52,7 +52,7 @@ public class MyBatisMapperScannerConfig {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("devSqlSessionFactory");
         mapperScannerConfigurer.setAnnotationClass(DevRepository.class);
-        mapperScannerConfigurer.setBasePackage("im.kuka.springboot.demo.dao.mappers");
+        mapperScannerConfigurer.setBasePackage("im.kuka.springboot.demo.dao.mappers"); // 多个package用,隔开
         Properties properties = new Properties();
         properties.setProperty("notEmpty", "false");
         properties.setProperty("IDENTITY", "MYSQL");
@@ -71,7 +71,7 @@ public class MyBatisMapperScannerConfig {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("prodSqlSessionFactory");
         mapperScannerConfigurer.setAnnotationClass(ProdRepository.class);
-        mapperScannerConfigurer.setBasePackage("im.kuka.springboot.demo.dao.mappers");
+        mapperScannerConfigurer.setBasePackage("im.kuka.springboot.demo.dao.mappers"); // 多个package用,隔开
         Properties properties = new Properties();
         properties.setProperty("notEmpty", "false");
         properties.setProperty("IDENTITY", "MYSQL");
@@ -89,7 +89,7 @@ public class MyBatisMapperScannerConfig {
     public MapperScannerConfigurer defaultMapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("devSqlSessionFactory");
-        mapperScannerConfigurer.setBasePackage("im.kuka.springboot.demo.dao.mappers");
+        mapperScannerConfigurer.setBasePackage("im.kuka.springboot.demo.dao.mappers"); // 多个package用,隔开
         Properties properties = new Properties();
         properties.setProperty("notEmpty", "false");
         properties.setProperty("IDENTITY", "MYSQL");

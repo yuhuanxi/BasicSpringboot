@@ -1,6 +1,10 @@
 package im.kuka.springboot.controller;
 
+import im.kuka.springboot.common.util.BaseController;
+import im.kuka.springboot.common.util.ReturnCode;
+import im.kuka.springboot.demo.model.DailyCost;
 import im.kuka.springboot.demo.model.Task;
+import im.kuka.springboot.demo.service.interfaces.IDailyCostService;
 import im.kuka.springboot.demo.service.interfaces.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +22,16 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/task")
-public class TaskController {
+public class TaskController extends BaseController {
 
     @Autowired
     private ITaskService taskService;
 
-    @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public void newTask(String title, String detail, Integer priority, String platform) {
+    @Autowired
+    private IDailyCostService dailyCostService;
+
+    @RequestMapping(value = "/newTask", method = RequestMethod.POST)
+    public BaseAjaxResult newTask(String title, String detail, Integer priority, String platform) {
 
         Task task = new Task(title, detail, priority, platform);
         task.setDeadLine(new Date());
@@ -33,6 +40,30 @@ public class TaskController {
 
         long ret = taskService.save(task);
 
-        System.out.println(ret);
+        if (ret > 0) {
+            return renderJsonSuccessed(true, ReturnCode.SUCCESS.getCode(), ReturnCode.SUCCESS.getMsg());
+        }
+
+        return renderJsonFail();
     }
+
+    @RequestMapping(value = "/newCost", method = RequestMethod.POST)
+    public BaseAjaxResult newDailyCost(Integer category, String item, Float money, String username) {
+
+        DailyCost dailyCost = new DailyCost();
+        dailyCost.setCategory(category);
+        dailyCost.setItem(item);
+        dailyCost.setMoney(money);
+        dailyCost.setUsername(username);
+        dailyCost.setCreatedTs(new Date());
+
+        long ret = dailyCostService.save(dailyCost);
+
+        if (ret > 0) {
+            return renderJsonSuccessed(true, ReturnCode.SUCCESS.getCode(), ReturnCode.SUCCESS.getMsg());
+        }
+
+        return renderJsonFail();
+    }
+
 }
