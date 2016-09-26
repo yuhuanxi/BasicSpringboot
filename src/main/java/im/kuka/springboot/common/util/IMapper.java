@@ -18,11 +18,13 @@ public interface IMapper<O> {
 
     long count(Map<String, Object> params);
 
-    int insert(O user);
+    int insert(O o);
 
-    int insertBatch(List<O> users);
+    int insertBatch(List<O> os);
 
-    int update(O user);
+    int update(O o);
 
     int delete(Map<String, Object> params);
+
+    int deleteById(Long id);
 }

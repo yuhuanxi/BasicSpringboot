@@ -4,7 +4,6 @@ import im.kuka.springboot.common.model.BaseModel;
 import lombok.Data;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import java.util.Date;
 
 /**
@@ -34,7 +33,7 @@ public class Task extends BaseModel {
      * 优先级 {@link Priority}
      */
     @Column(nullable = false)
-    private Integer priority;
+    private String priority;
 
     /**
      * 任务开始时间
@@ -60,14 +59,14 @@ public class Task extends BaseModel {
     @Column(nullable = false)
     private String status;
 
-    public Task(String title, String detail, Integer priority, String platform) {
+    public Task(String title, String detail, String priority, String platform) {
         this.title = title;
         this.detail = detail;
         this.priority = priority;
         this.platform = platform;
     }
 
-    enum Priority {
+    public enum Priority {
         MAX,
         MID,
         MIN;

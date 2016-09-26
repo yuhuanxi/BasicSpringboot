@@ -7,6 +7,16 @@
         daily_cost
     </sql>
 
+    <sql id="fields">
+        `id`
+        ,`category`
+        ,`item`
+        ,`money`
+        ,`username`
+        ,`created_ts`
+        ,`updated_ts`
+    </sql>
+
     <!-- 插入 -->
     <insert id="insert" parameterType="DailyCost" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO
@@ -27,5 +37,114 @@
         ,#{createdTs}
         );
     </insert>
+
+    <resultMap id="dailyCostRm" type="DailyCost">
+        <result property="id" column="id"/>
+        <result property="category" column="category"/>
+        <result property="item" column="item"/>
+        <result property="money" column="money"/>
+        <result property="username" column="username"/>
+        <result property="createdTs" column="created_ts"/>
+        <result property="updatedTs" column="updated_ts"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" parameterType="list" useGeneratedKeys="true"
+            keyProperty="id">
+        <selectKey resultType="long" keyProperty="id" order="BEFORE">
+            SELECT
+            LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO
+        <include refid="table"/>
+        (
+        `category`
+        ,`item`
+        ,`money`
+        ,`username`
+        ,`created_ts`
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index"
+                 separator=",">
+            (
+            #{item.category}
+            ,#{item.item}
+            ,#{item.money}
+            ,#{item.username}
+            ,#{item.createdTs})
+        </foreach>
+    </insert>
+
+    <select id="count" resultType="_long" parameterType="map">
+        SELECT
+        COUNT(*)
+        FROM
+        <include refid="table"/>
+        <where>
+            <if test="category != null">category = #{category}</if>
+        </where>
+    </select>
+
+    <select id="selectOne" resultMap="dailyCostRm">
+        SELECT
+        <include refid="fields"/>
+        FROM
+        <include refid="table"/>
+        <where>
+            <if test="id != null">id = #{id}</if>
+        </where>
+        LIMIT 0,1;
+    </select>
+
+    <select id="select" resultMap="dailyCostRm">
+        SELECT
+        <include refid="fields"/>
+        FROM
+        <include refid="table"/>
+        <where>
+            <if test="category != null">category = #{category}</if>
+        </where>
+        <if test="offset!=null">
+            LIMIT #{offset},#{limit}
+        </if>
+    </select>
+
+
+    <!-- 转让待处理的消息给新的管理员 -->
+    <update id="update" parameterType="DailyCost">
+        UPDATE
+        <include refid="table"/>
+        <set>
+            <if test="category != null">category = #{category},</if>
+            <if test="item != null">item = #{item},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="username != null">username = #{username}</if>
+        </set>
+        <where>
+            <if test="id !=null">id = #{id}</if>
+        </where>
+        ;
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="map">
+        DELETE FROM
+        <include refid="table"/>
+        <where>
+            <if test="id != null">id = #{id}</if>
+        </where>
+        ;
+    </delete>
+
+    <!-- 删除 -->
+    <delete id="deleteById" parameterType="_long">
+        DELETE FROM
+        <include refid="table"/>
+        <where>
+            <if test="value != null">id = #{id}</if>
+        </where>
+        ;
+    </delete>
 
 </mapper>
