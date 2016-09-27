@@ -65,7 +65,6 @@ public class DemoController extends BaseController {
 //            attributes.addAttribute("user", user); // 地址栏传值,参数会出现在url上
             attributes.addFlashAttribute("user", user); // 在页面F5刷新数据将丢失
             ModelAndView mav = new ModelAndView("redirect:/demo/success");
-            System.out.println("login method");
             return mav;
         }
         attributes.addFlashAttribute("errorMsg", "用户名错误,重新输入");

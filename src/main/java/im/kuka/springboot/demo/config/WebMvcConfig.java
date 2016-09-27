@@ -40,7 +40,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-    public static final String[] loginPathPatterns = {"/demo/newTask"};
+    public static final String[] loginPathPatterns = {"/demo/list"};
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
