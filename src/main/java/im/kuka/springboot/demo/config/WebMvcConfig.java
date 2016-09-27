@@ -32,13 +32,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 /**
  * @author: shipeng.yu
- * @time: 2016年09月07日 上午2:02
+ * @time: 2016年09月27日 上午2:02
  * @version: 1.0
  * @since: 1.0
  * @description: Web Config 配置类
  */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
+
+    public static final String[] loginPathPatterns = {"/demo/newTask"};
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -48,7 +50,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 配置登录拦截器
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns(LoginInterceptor.pathPatterns);
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns(loginPathPatterns);
         super.addInterceptors(registry);
     }
 

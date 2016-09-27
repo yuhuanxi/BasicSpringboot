@@ -61,7 +61,7 @@ public class DemoController extends BaseController {
     public ModelAndView login(HttpServletRequest httpRequest, User user, RedirectAttributes attributes) {
         if ("shipeng.yu".equals(user.getUsername())) {
             user.setTime(new Date());
-            httpRequest.getSession().setAttribute("user", user);
+            httpRequest.getSession().setAttribute("username", user.getUsername());
 //            attributes.addAttribute("user", user); // 地址栏传值,参数会出现在url上
             attributes.addFlashAttribute("user", user); // 在页面F5刷新数据将丢失
             ModelAndView mav = new ModelAndView("redirect:/demo/success");
