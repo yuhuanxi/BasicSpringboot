@@ -10,6 +10,7 @@ import im.kuka.springboot.demo.service.interfaces.IDailyCostService;
 import im.kuka.springboot.demo.service.interfaces.ITaskService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +33,9 @@ import java.util.*;
 public class DemoController extends BaseController {
 
     @Autowired
+    private JavaMailSender javaMailSender;
+
+    @Autowired
     private ITaskService taskService;
 
     @Autowired
@@ -43,16 +47,25 @@ public class DemoController extends BaseController {
         return new ModelAndView("/demo/index");
     }
 
+    /**
+     * 使用拦截器
+     * 用户登录:在登录成功后,发送登录成功邮件
+     * 登录失败,则返回登录页面,并提示错误消息
+     *
+     * @param httpRequest
+     * @param user
+     * @param attributes
+     * @return
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView login(HttpServletRequest httpRequest, User user, RedirectAttributes attributes) {
-
         if ("shipeng.yu".equals(user.getUsername())) {
             user.setTime(new Date());
             httpRequest.getSession().setAttribute("user", user);
 //            attributes.addAttribute("user", user); // 地址栏传值,参数会出现在url上
             attributes.addFlashAttribute("user", user); // 在页面F5刷新数据将丢失
             ModelAndView mav = new ModelAndView("redirect:/demo/success");
-            // 登录成功,发送邮件
+            System.out.println("login method");
             return mav;
         }
         attributes.addFlashAttribute("errorMsg", "用户名错误,重新输入");
