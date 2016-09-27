@@ -7,8 +7,8 @@ import java.util.Date;
  */
 public class User {
 
-    private String username;
-    private Date time;
+    public String username;
+    public Date time;
 
     public User() {
         super();

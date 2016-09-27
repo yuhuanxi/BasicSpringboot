@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="springChat" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Spring WebSocket Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="/lib/flat-ui/dist/css/vendor/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/lib/flat-ui/dist/css/flat-ui.css" rel="stylesheet"/>
+    <link href="/lib/angularjs-toaster/toaster.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="login-form">
+    <form method="post" action="/demo/login">
+        <div class="form-group">
+            <input type="text" class="form-control login-field"
+                   placeholder="请输入您的姓名" name="username"/> <label
+                class="login-field-icon fui-user" for="login-name">
+            姓名</label>
+        </div>
+        <span style="color: red;" th:text="${errorMsg}"/>
+        <input class="btn btn-primary btn-lg btn-block"
+               type="submit" value="登录"/>
+    </form>
+</div>
+</body>
+</html>

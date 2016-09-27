@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="springChat" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Spring Boot Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="/lib/flat-ui/dist/css/vendor/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/lib/flat-ui/dist/css/flat-ui.css" rel="stylesheet"/>
+    <link href="/lib/angularjs-toaster/toaster.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="login-form">
+    很高兴见到你,<span th:text="${user.username} + '!'"/>
+    登录时间,<span th:text="${user.time}"/>
+</div>
+</body>
+</html>

@@ -36,7 +36,7 @@ public class LoginController {
             messagingTemplate.convertAndSend(LOGOUT, participantRepository.getActiveSessions().get(httpRequest.getSession().getId()));
         }
         participantRepository.add(httpRequest.getSession().getId(), user);
-        return "redirect:/chart";
+        return "redirect:chart";
     }
 
 }

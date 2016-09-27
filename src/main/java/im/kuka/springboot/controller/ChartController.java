@@ -29,7 +29,7 @@ public class ChartController {
         }
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("username", user.getUsername());
-        return "chart";
+        return "chat/chart";
     }
 
     @SubscribeMapping("/chat.participants")

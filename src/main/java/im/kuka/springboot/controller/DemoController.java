@@ -5,14 +5,19 @@ import im.kuka.springboot.common.util.PagingDto;
 import im.kuka.springboot.common.util.ReturnCode;
 import im.kuka.springboot.demo.model.DailyCost;
 import im.kuka.springboot.demo.model.Task;
+import im.kuka.springboot.demo.model.User;
 import im.kuka.springboot.demo.service.interfaces.IDailyCostService;
 import im.kuka.springboot.demo.service.interfaces.ITaskService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -31,6 +36,35 @@ public class DemoController extends BaseController {
 
     @Autowired
     private IDailyCostService dailyCostService;
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ModelAndView index(@ModelAttribute("errorMsg") String errorMsg) {
+        // 默认为templates 下的视图,user.html其中html可以省略
+        return new ModelAndView("/demo/index");
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ModelAndView login(HttpServletRequest httpRequest, User user, RedirectAttributes attributes) {
+
+        if ("shipeng.yu".equals(user.getUsername())) {
+            user.setTime(new Date());
+            httpRequest.getSession().setAttribute("user", user);
+//            attributes.addAttribute("user", user); // 地址栏传值,参数会出现在url上
+            attributes.addFlashAttribute("user", user); // 在页面F5刷新数据将丢失
+            ModelAndView mav = new ModelAndView("redirect:/demo/success");
+            // 登录成功,发送邮件
+            return mav;
+        }
+        attributes.addFlashAttribute("errorMsg", "用户名错误,重新输入");
+        return new ModelAndView("redirect:/demo");
+    }
+
+    // redirect 之间传值,可以用 ModelAttribute 来获取
+    @RequestMapping(value = "/success", method = RequestMethod.GET)
+    public ModelAndView success(@ModelAttribute("user") User user) {
+        ModelAndView modelAndView = new ModelAndView("/demo/success");
+        return modelAndView;
+    }
 
     @RequestMapping(value = "/newTask", method = RequestMethod.POST)
     public BaseAjaxResult newTask(String title, String detail, String priority, String platform) {
