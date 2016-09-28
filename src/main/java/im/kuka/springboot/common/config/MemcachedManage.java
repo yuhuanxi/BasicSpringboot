@@ -31,16 +31,6 @@ public class MemcachedManage {
     //    @Value("${memcached.address}")
     private String address;
 
-    public CacheFactory cacheFactory() throws Exception {
-        CacheFactory cacheFactory = new CacheFactory();
-        cacheFactory.setCacheClientFactory(memcacheClientFactory());
-        cacheFactory.setConfiguration(cacheConfiguration());
-        cacheFactory.setAddressProvider(defaultAddressProvider());
-        cacheFactory.setCacheName("dev");  // 名称必填
-        cacheFactory.afterPropertiesSet();
-        return cacheFactory;
-    }
-
     @Bean(name = "cache")
     public Cache cache() throws Exception {
         try {
@@ -53,6 +43,16 @@ public class MemcachedManage {
             LOG.error(e.getMessage(), e);
             return null;
         }
+    }
+
+    public CacheFactory cacheFactory() throws Exception {
+        CacheFactory cacheFactory = new CacheFactory();
+        cacheFactory.setCacheClientFactory(memcacheClientFactory());
+        cacheFactory.setConfiguration(cacheConfiguration());
+        cacheFactory.setAddressProvider(defaultAddressProvider());
+        cacheFactory.setCacheName("dev");  // 名称必填
+        cacheFactory.afterPropertiesSet();
+        return cacheFactory;
     }
 
     public DefaultAddressProvider defaultAddressProvider() {
@@ -81,6 +81,5 @@ public class MemcachedManage {
     public void setAddress(String address) {
         this.address = address;
     }
-
 
 }
