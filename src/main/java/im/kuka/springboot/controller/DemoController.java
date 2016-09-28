@@ -1,5 +1,7 @@
 package im.kuka.springboot.controller;
 
+import com.google.code.ssm.Cache;
+import com.google.code.ssm.api.format.SerializationType;
 import im.kuka.springboot.common.util.BaseController;
 import im.kuka.springboot.common.util.PagingDto;
 import im.kuka.springboot.common.util.ReturnCode;
@@ -9,7 +11,10 @@ import im.kuka.springboot.demo.model.User;
 import im.kuka.springboot.demo.service.interfaces.IDailyCostService;
 import im.kuka.springboot.demo.service.interfaces.ITaskService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +37,14 @@ import java.util.*;
 @RequestMapping("/demo")
 public class DemoController extends BaseController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(DemoController.class);
+
     @Autowired
     private JavaMailSender javaMailSender;
+
+    @Autowired
+    @Qualifier("cache")
+    private Cache cache;
 
     @Autowired
     private ITaskService taskService;
@@ -243,4 +254,33 @@ public class DemoController extends BaseController {
 
         return renderJsonFail();
     }
+
+    /**
+     * 测试缓存
+     * <p>
+     * TODO 缓存的一些 annotation 无效,例如 @ReadThroughSingleCache
+     *
+     * @return
+     */
+    @RequestMapping(value = "/cache", method = RequestMethod.GET)
+    public BaseAjaxResult testCache() {
+
+        String test = "";
+
+        try {
+            test = cache.get("test", SerializationType.JAVA);
+            if (test != null) {
+                LOG.info("from cache test:{}", test);
+            } else {
+                test = "Hello World";
+                cache.set("test", 30, test, SerializationType.JAVA);
+                LOG.info("set cache test:{}", test);
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+
+        return renderJsonAjaxResult(ReturnCode.SUCCESS.getCode(), ReturnCode.SUCCESS.getMsg(), test);
+    }
+
 }
